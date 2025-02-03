@@ -1,8 +1,9 @@
 import os
 from src.data_preprocessing.clean_data import preprocess_data
 from src.data_preprocessing.feature_engineering import feature_engineering
-from src.models.train import train_models
+from src.models.train_clinical import train_models_clinical
 from src.models.evaluate import evaluate_models
+from src.models.train_user import train_models_user
 
 
 # Define paths
@@ -30,10 +31,16 @@ def main():
     print(f"📁 Engineered data saved to {ENGINEERED_DATA_PATH}")
 
 
-    # Step 4: Model Training
+    # Step 4: Model Training(clinical)
     print("Starting training process...")
-    train_models()
+    train_models_clinical()
     print("Training completed successfully!")
+
+    # Step 5: Model Training(user)
+    print("Starting training process...")
+    train_models_user()
+    print("Training completed successfully!")
+
     
     # Step 5: Model Evaluation
     # print("--------------------")

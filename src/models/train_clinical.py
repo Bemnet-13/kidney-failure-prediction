@@ -16,19 +16,19 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 # Define paths using BASE_DIR
 PROCESSED_DATA_PATH = os.path.join(BASE_DIR, "data/processed/cleaned_ckd_data.csv")
 MODEL_PATH_REGRESSION = os.path.join(BASE_DIR, "models/ckd_stage_model_clinical.pkl")
-MODEL_PATH_CLASSIFICATION = os.path.join(BASE_DIR, "models/affected_kidney_model_clinical.pkl")
+MODEL_PATH_CLASSIFICATION = os.path.join(BASE_DIR, "models/ckd_classification_model_clinical.pkl")
 
 
-def train_models():
+def train_models_clinical():
     """ Train both regression and classification models for CKD prediction. """
 
     # Load cleaned data
     df = pd.read_csv(PROCESSED_DATA_PATH)
 
     # Define Features and Targets
-    X = df.drop(columns=["stage", "affected"])  # All features except targets
+    X = df.drop(columns=["stage", "class"])  # All features except targets
     y_reg = df["stage"]  # Regression target
-    y_clf = df["affected"]  # Classification target
+    y_clf = df["class"]  # Classification target
 
     # Split data
     X_train, X_test, y_train_reg, y_test_reg = train_test_split(X, y_reg, test_size=0.2, random_state=42)
@@ -61,7 +61,7 @@ def train_models():
 
     # Print Evaluation
     print(f"Regression Model RMSE (CKD Stage): {reg_rmse:.4f}")
-    print(f"Classification Model Accuracy (Affected Kidneys): {clf_acc:.4%}")
+    print(f"Classification Model Accuracy (CKD Presence/Not): {clf_acc:.4%}")
 
     # Save Models
     with open(MODEL_PATH_REGRESSION, "wb") as f:
@@ -73,4 +73,4 @@ def train_models():
     print("Models saved successfully!")
 
 if __name__ == "__main__":
-    train_models()
+    train_models_clinical()
