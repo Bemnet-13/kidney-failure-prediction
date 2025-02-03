@@ -1,6 +1,9 @@
 import os
 from src.data_preprocessing.clean_data import preprocess_data
 from src.data_preprocessing.feature_engineering import feature_engineering
+from src.models.train import train_models
+from src.models.evaluate import evaluate_models
+
 
 # Define paths
 RAW_DATA_PATH = os.path.join("data", "raw", "ckd-dataset-v2.csv")
@@ -25,6 +28,18 @@ def main():
     # Step 3: Save Processed Data
     engineered_df.to_csv(ENGINEERED_DATA_PATH, index=False)
     print(f"📁 Engineered data saved to {ENGINEERED_DATA_PATH}")
+
+
+    # Step 4: Model Training
+    print("Starting training process...")
+    train_models()
+    print("Training completed successfully!")
+    
+    # Step 5: Model Evaluation
+    # print("--------------------")
+    # print("Starting model evalutation")
+    # evaluate_models()
+    # print("Model Evaluation Completed successfully")
 
 if __name__ == "__main__":
     main()
